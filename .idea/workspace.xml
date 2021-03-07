@@ -37,7 +37,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="settings.editor.selected.configurable" value="reference.settings.project.maven.repository.indices" />
+    <property name="settings.editor.selected.configurable" value="settings.github" />
   </component>
   <component name="RunManager">
     <configuration default="true" type="Applet" factoryName="Applet">
@@ -105,7 +105,7 @@
       <workItem from="1615091726544" duration="2881000" />
       <workItem from="1615102357259" duration="5000" />
       <workItem from="1615102371525" duration="3314000" />
-      <workItem from="1615119266256" duration="1843000" />
+      <workItem from="1615119266256" duration="2423000" />
     </task>
     <task id="LOCAL-00001" summary="Add the develop environment">
       <created>1615102488991</created>
@@ -135,11 +135,29 @@
       <option name="project" value="LOCAL" />
       <updated>1615105498015</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Add the develop environment">
+      <created>1615121455733</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1615121455733</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Add the develop environment" />
@@ -150,14 +168,22 @@
       <screen x="0" y="25" width="1440" height="875" />
     </state>
     <state x="449" y="266" key="#com.intellij.fileTypes.FileTypeChooser/0.25.1440.875@0.25.1440.875" timestamp="1615119430086" />
-    <state x="285" y="58" key="CommitChangelistDialog2" timestamp="1615119359476">
+    <state x="285" y="58" key="CommitChangelistDialog2" timestamp="1615121853422">
       <screen x="0" y="25" width="1440" height="875" />
     </state>
-    <state x="285" y="58" key="CommitChangelistDialog2/0.25.1440.875@0.25.1440.875" timestamp="1615119359476" />
-    <state x="307" y="196" key="Vcs.Push.Dialog.v2" timestamp="1615121245586">
+    <state x="285" y="58" key="CommitChangelistDialog2/0.25.1440.875@0.25.1440.875" timestamp="1615121853422" />
+    <state x="176" y="125" width="1062" height="668" key="DiffContextDialog" timestamp="1615121578634">
       <screen x="0" y="25" width="1440" height="875" />
     </state>
-    <state x="307" y="196" key="Vcs.Push.Dialog.v2/0.25.1440.875@0.25.1440.875" timestamp="1615121245586" />
+    <state x="176" y="125" width="1062" height="668" key="DiffContextDialog/0.25.1440.875@0.25.1440.875" timestamp="1615121578634" />
+    <state x="216" y="95" key="SettingsEditor" timestamp="1615121818903">
+      <screen x="0" y="25" width="1440" height="875" />
+    </state>
+    <state x="216" y="95" key="SettingsEditor/0.25.1440.875@0.25.1440.875" timestamp="1615121818903" />
+    <state x="307" y="196" key="Vcs.Push.Dialog.v2" timestamp="1615121575750">
+      <screen x="0" y="25" width="1440" height="875" />
+    </state>
+    <state x="307" y="196" key="Vcs.Push.Dialog.v2/0.25.1440.875@0.25.1440.875" timestamp="1615121575750" />
   </component>
   <component name="masterDetails">
     <states>
