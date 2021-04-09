@@ -9,9 +9,9 @@
     <span th:if="${null!=session.user}">
 		<a href="login" th:text="${session.user.name}"></a>
 		<a href="forelogout" >Exit</a>
-		<a th:if="${2==session.user.user_type}">
+		<span th:if="${session.user.user_type==2}">
 			<a href="seller?sellerId=testseller2">Seller-back-end</a>
-		</a>
+		</span>
 	</span>
 	<!--
 	<span th:if="${2==session.user.user_type}">
