@@ -11,7 +11,12 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
+/*
+order与orderitem的关系：
+order与orderitem是一对多关系
+orderitem有pid(一对多）
+这里设定一份订单可以订购多个产品
+ */
 @Entity
 @Table(name = "orderItem")
 @JsonIgnoreProperties({ "handler","hibernateLazyInitializer" })
