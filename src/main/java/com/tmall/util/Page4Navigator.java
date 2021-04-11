@@ -10,7 +10,8 @@ public class Page4Navigator<T> {
 
     int totalPages;
 
-    int number;
+    int number;//当前页数
+
 
     long totalElements;
 
