@@ -39,7 +39,48 @@ public class Product {
     private int stock;
     private Date createDate;
     @Transient
+    private  List<ProductImage> productSingleImages;//单个产品图片集合
+    @Transient
+    private  List<ProductImage> productDetailImages;//详情产品集合
+    @Transient
+    private int saleCount;//销量
+    @Transient
+    private int reviewCount;//累计评价
+    @Transient
     private ProductImage firstProductImage;
+    public List<ProductImage> getProductSingleImages() {
+        return productSingleImages;
+    }
+
+    public void setProductSingleImages(List<ProductImage> productImages) {
+        this.productSingleImages = productImages;
+    }
+
+    public List<ProductImage> getProductDetailImages() {
+        return productDetailImages;
+    }
+
+    public void setProductDetailImages(List<ProductImage> productDetailmages) {
+        this.productDetailImages = productDetailmages;
+    }
+
+    public int getSaleCount() {
+        return saleCount;
+    }
+
+    public void setSaleCount(int saleCount) {
+        this.saleCount = saleCount;
+    }
+
+    public int getReviewCount() {
+        return reviewCount;
+    }
+
+    public void setReviewCount(int reviewCount) {
+        this.reviewCount = reviewCount;
+    }
+
+
 
     public int getId() {
         return id;
@@ -117,7 +158,18 @@ public class Product {
         return firstProductImage;
     }
 
+    public void setSeller(String seller) {
+        this.seller = seller;
+    }
+
     public void setFirstProductImage(ProductImage firstProductImage) {
         this.firstProductImage = firstProductImage;
+    }
+    @Override
+    public String toString() {
+        return "Product [id=" + id + ", category=" + category + ", name=" + name + ", subTitle=" + subTitle
+                + ", originalPrice=" + originalPrice + ", promotePrice=" + promotePrice + ", stock=" + stock
+                + ", createDate=" + createDate + ", firstProductImage=" + firstProductImage + ", reviewCount="
+                + reviewCount + ", saleCount=" + saleCount + "]";
     }
 }
