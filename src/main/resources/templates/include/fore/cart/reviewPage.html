@@ -1,0 +1,109 @@
+<div th:fragment="html"> 
+	<script>
+		$(function(){
+			var oid = getUrlParms("oid");
+	        var data4Vue = {
+	        		uri:'forereview',
+	        		orders:[],
+	        		p:'',
+	        		o:null,
+	        		reviews:[],
+	        		showReviews:false,
+	        		content:''
+	        };
+	        //ViewModel
+	        var vue = new Vue({
+	            el: '#workingArea',
+	            data: data4Vue,
+	            mounted:function(){ //mounted　表示这个 Vue 对象加载成功了
+	            	this.load();
+	            },        
+	            methods: {     	
+	            	load:function(){
+	                    var url =  this.uri+"?oid="+oid;
+	                    axios.get(url).then(function(response) {
+	                    	var result = response.data;
+	                    	vue.p = result.data.p;
+	                    	vue.o = result.data.o;
+	                    	vue.reviews = result.data.reviews;
+	                        vue.$nextTick(function(){
+	        	            	linkDefaultActions();
+	                        })
+	                    });
+	            	},
+	            	doreview:function(){
+	                    var url =  "foredoreview?oid="+vue.o.id+"&pid="+vue.p.id+"&content="+vue.content;
+	                    axios.post(url).then(function(response) {
+	                    	var result = response.data;
+	                    	vue.showReviews = true;
+	                    	vue.load();
+	                    });
+	            	}
+	            }
+	        });       			
+		})	
+	</script>
+	<div class="reviewDiv">
+		<div class="reviewProductInfoDiv">
+			<div class="reviewProductInfoImg"><img v-if="null!=p.firstProductImage" width="400px" height="400px" :src="'img/productSingle/'+p.firstProductImage.id+'.jpg'"></div>
+			<div class="reviewProductInfoRightDiv">
+				<div class="reviewProductInfoRightText">
+					{{p.name}}
+				</div>
+				<table class="reviewProductInfoTable">
+					<tr>
+						<td width="75px">Price:</td>
+						<td><span class="reviewProductInfoTablePrice">￥{{p.originalPrice|formatMoneyFilter}}</span> Yuan </td>
+					</tr>
+					<tr>
+						<td>Delivery</td>
+						<td>Express delivery:  0.00</td>
+					</tr>
+					<tr>
+						<td>Monthly sales:</td>
+						<td><span class="reviewProductInfoTableSellNumber">{{p.saleCount}}</span> 件</td>
+					</tr>
+				</table>
+				
+				<div class="reviewProductInfoRightBelowDiv">
+					<span class="reviewProductInfoRightBelowImg"><img1 src="img/site/reviewLight.png"></span>
+					<span v-if="null!=o" class="reviewProductInfoRightBelowText" >What you’re looking at is the information about the product you’ve purchased in {{o.createDate | formatDateFilter('YYYY-MM-DD')}} </span>
+				
+				</div>
+			</div>
+			<div style="clear:both"></div>
+		</div>
+		<div class="reviewStasticsDiv">
+			<div class="reviewStasticsLeft">
+					<div class="reviewStasticsLeftTop"></div>
+					<div class="reviewStasticsLeftContent">Cumulative evaluation <span class="reviewStasticsNumber"> {{p.reviewCount}}</span></div>
+					<div class="reviewStasticsLeftFoot"></div>
+			</div>
+			<div class="reviewStasticsRight">
+				<div class="reviewStasticsRightEmpty"></div>
+				<div class="reviewStasticsFoot"></div>
+			</div>
+		</div>		
+		
+		<div v-show="showReviews" class="reviewDivlistReviews">
+				<div v-for="r in reviews" class="reviewDivlistReviewsEach">
+					<div class="reviewDate">{{r.createDate| formatDateFilter}}</div>
+					<div class="reviewContent">{{r.content}}</div>
+					<div class="reviewUserInfo pull-right">{{r.user.anonymousName}}<span class="reviewUserInfoAnonymous">(anonymous)</span></div>
+				</div>
+		</div>
+		
+		<div v-show="!showReviews" class="makeReviewDiv">
+				<div class="makeReviewText">Other buyers, need your advice!</div>
+				<table class="makeReviewTable">
+					<tr>
+						<td class="makeReviewTableFirstTD">Evaluation product</td>
+						<td><textarea v-model="content"></textarea></td>
+					</tr>
+				</table>
+				<div class="makeReviewButtonDiv">
+					<button @click="doreview" type="submit">Submit review</button>
+				</div>
+		</div>	
+	</div>
+</div>
