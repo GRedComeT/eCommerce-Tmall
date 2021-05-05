@@ -43,7 +43,7 @@ public class OrderService {
         }
     }
 
-    private void removeOrderFromOrderItem(Order order) {
+    public void removeOrderFromOrderItem(Order order) {
         List<OrderItem> orderItems= order.getOrderItems();
         for (OrderItem orderItem : orderItems) {
             orderItem.setOrder(null);
@@ -87,6 +87,15 @@ public class OrderService {
 
     public List<Order> listByUserAndNotDeleted(User user) {
         return orderDAO.findByUserAndStatusNotOrderByIdDesc(user, OrderService.delete);
+    }
+
+    public void cacl(Order o) {
+        List<OrderItem> orderItems = o.getOrderItems();
+        float total = 0;
+        for (OrderItem orderItem : orderItems) {
+            total+=orderItem.getProduct().getPromotePrice()*orderItem.getNumber();
+        }
+        o.setTotal(total);
     }
 
 }

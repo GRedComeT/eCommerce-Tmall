@@ -290,4 +290,13 @@ public class ForeRESTController {
         orderService.removeOrderFromOrderItem(os);
         return os;
     }
+
+    @GetMapping("foreconfirmPay")
+    public Object confirmPay(int oid) {
+        Order o = orderService.get(oid);
+        orderItemService.fill(o);
+        orderService.cacl(o);
+        orderService.removeOrderFromOrderItem(o);
+        return o;
+    }
 }
