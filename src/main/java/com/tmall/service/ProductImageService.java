@@ -48,6 +48,7 @@ public class ProductImageService   {
     public void setFirstProductImages(List<Product> products) {
         for (Product product : products)
             setFirstProductImage(product);
+
     }
 
     public void setFirstProductImagesOnOrderItems(List<OrderItem> ois) {
