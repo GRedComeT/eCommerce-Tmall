@@ -1,0 +1,64 @@
+<div th:fragment="html"> 
+	<script>
+		$(function(){
+			var oid = getUrlParms("oid");
+			var total = getUrlParms("total");
+	        var data4Vue = {
+	        		uri:'forepayed',
+	        		order:[],
+	        		total:0
+	        };
+	        //ViewModel
+	        var vue = new Vue({
+	            el: '#workingArea',
+	            data: data4Vue,
+	            mounted:function(){ //mounted　表示这个 Vue 对象加载成功了
+	            	this.total = total;
+	            	this.load();
+	            },        
+	            methods: {     	
+	            	load:function(){
+	                    var url =  this.uri+"?oid="+oid;
+	                    axios.get(url).then(function(response) {
+	                    	vue.order = response.data;
+	                    });
+	            	}
+	            }
+	        });       			
+			
+		})		
+	
+	</script>
+
+	<div class="payedDiv">
+		<div class="payedTextDiv">
+			<img src="img/site/paySuccess.png">
+			<span>Your payment is successful</span>
+			
+		</div>
+		<div class="payedAddressInfo">
+			<ul>
+				<li>Shipping address：{{order.address}} {{order.receiver}} {{order.mobile }}</li>
+				<li>real payment：<span class="payedInfoPrice">
+					{{total|formatMoney}} 
+				</li>
+				<li>Expected to be delivered within three days	</li>
+			</ul>
+					
+			<div class="paedCheckLinkDiv">
+				You can
+				<a class="payedCheckLink" href="bought">Check the products you have bought</a>
+				<a class="payedCheckLink" href="bought">View transaction details </a>
+			</div>
+				
+		</div>
+		
+		<div class="payedSeperateLine">
+		</div>
+		
+		<div class="warningDiv">
+			<img src="img/site/warning.png">
+			<b>Safety reminder:</b>After placing the order,<span class="redColor boldWord">Those who use QQ to send you a link for refund are scammers!</span>
+		</div>
+	</div>
+</div>
