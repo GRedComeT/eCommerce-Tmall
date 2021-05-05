@@ -280,4 +280,14 @@ public class ForeRESTController {
         orderService.update(order);
         return order;
     }
+
+    @GetMapping("forebought")
+    public Object bought(HttpSession session) {
+        User user =(User)  session.getAttribute("user");
+        if(null==user)
+            return Result.fail("未登录");
+        List<Order> os= orderService.listByUserWithoutDelete(user);
+        orderService.removeOrderFromOrderItem(os);
+        return os;
+    }
 }
