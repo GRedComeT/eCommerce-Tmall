@@ -4,8 +4,8 @@
     </a>
     <form action="search" method="get" >
         <div class="simpleSearchDiv pull-right">
-            <input type="text" placeholder="平衡车 原汁机"  name="keyword">
-            <button class="searchButton" type="submit">搜天猫</button>
+            <input type="text" placeholder="Your Favourite"  name="keyword">
+            <button class="searchButton" type="submit">Search in XDMall</button>
             <div class="searchBelow">
 				<span th:each="c,status: ${application.categories_below_search}" th:if="${status.index>=7 && status.index<=10}">
 					<a th:href="@{'category?cid='+${c.id}}" th:text="${c.name}" ></a>

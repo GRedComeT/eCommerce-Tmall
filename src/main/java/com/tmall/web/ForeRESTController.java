@@ -1,6 +1,7 @@
 package com.tmall.web;
 
 import com.tmall.pojo.*;
+import com.tmall.comparator.*;
 import com.tmall.service.CategoryService;
 import com.tmall.service.ProductService;
 import com.tmall.service.UserService;
@@ -9,8 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.HtmlUtils;
 import com.tmall.service.*;
-import javax.servlet.http.HttpSession;
 
+import javax.servlet.http.HttpSession;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -107,5 +109,38 @@ public class ForeRESTController {
         if(null!=user)
             return Result.success();
         return Result.fail("未登录");
+    }
+
+    @GetMapping("forecategory/{cid}")
+    public Object category(@PathVariable int cid,String sort) {
+        Category c = categoryService.get(cid);
+        productService.fill(c);
+        productService.setSaleAndReviewNumber(c.getProducts());
+        categoryService.removeCategoryFromProduct(c);
+
+        if(null!=sort){
+            switch(sort){
+                case "review":
+                    Collections.sort(c.getProducts(),new ProductReviewComparator());
+                    break;
+                case "date" :
+                    Collections.sort(c.getProducts(),new ProductDateComparator());
+                    break;
+
+                case "saleCount" :
+                    Collections.sort(c.getProducts(),new ProductSaleCountComparator());
+                    break;
+
+                case "price":
+                    Collections.sort(c.getProducts(),new ProductPriceComparator());
+                    break;
+
+                case "all":
+                    Collections.sort(c.getProducts(),new ProductAllComparator());
+                    break;
+            }
+        }
+
+        return c;
     }
 }
