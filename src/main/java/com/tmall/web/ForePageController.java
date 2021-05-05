@@ -2,6 +2,7 @@ package com.tmall.web;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import javax.servlet.http.HttpSession;
 
 @Controller
 public class ForePageController {
@@ -70,7 +71,12 @@ public class ForePageController {
         return "fore/search";
     }
     @GetMapping("/forelogout")
+
+    public String logout(HttpSession session) {
+        session.removeAttribute("user");
+
     public String logout( ) {
+
         return "redirect:home";
     }
 

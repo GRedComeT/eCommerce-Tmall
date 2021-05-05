@@ -1,0 +1,168 @@
+<div th:fragment="html"> 
+	<script>
+		$(function(){
+			var oiid = getUrlParms("oiid");
+	        var data4Vue = {
+	        		uri:'forebuy',
+	        		total:0,
+	        		orderItems:[],
+	        		order:{address:'',post:'',receiver:'',mobile:'',userMessage:''}
+	        };
+	        //ViewModel
+	        var vue = new Vue({
+	            el: '#workingArea',
+	            data: data4Vue,
+	            mounted:function(){ //mounted　表示这个 Vue 对象加载成功了
+	            	this.load();
+	            },        
+	            methods: {     	
+	            	load:function(){
+	                    var url =  this.uri+"/?oiid="+oiid;
+	                    axios.get(url).then(function(response) {
+	                    	var result = response.data;
+	            	        vue.total = result.data.total;
+	            	        vue.orderItems = result.data.orderItems;
+	            	        
+	                        vue.$nextTick(function(){
+	        	            	linkDefaultActions();
+	                        })
+	                    });
+	            	},
+	            	submitOrder:function(){
+	                    var url =  "forecreateOrder";
+	                    axios.post(url,this.order).then(function(response) {
+	                    	var result = response.data;
+	                    	var oid = result.data.oid;
+	                    	var total = result.data.total;
+	                    	location.href="alipay?oid="+oid+"&total="+total;
+	                    });	            		
+	            	}
+	            }
+	        });       			
+			
+		})
+	</script>
+	<div class="buyPageDiv">
+		<div class="buyFlow">
+			<img class="pull-left" src="img/site/simpleLogo.png">
+			<img class="pull-right" src="img/site/buyflow.png">
+			<div style="clear:both"></div>
+		</div>
+		<div class="address">
+			<div class="addressTip">Enter the shipping address</div>
+			<div>
+			
+				<table class="addressTable">
+					<tr>
+						<td class="firstColumn">Address<span class="redStar">*</span></td>
+						
+						<td><textarea name="address" v-model="order.address" placeholder="It is recommended that you fill in the detailed delivery address truthfully, such as street name, house number, floor and room number and other information"></textarea></td>
+					</tr>
+					<tr>
+						<td>Postal code</td>
+						<td><input  name="post" v-model="order.post" placeholder="If you don’t know the postal code, please fill in 000000" type="text"></td>
+					</tr>
+					<tr>
+						<td>Consignee name<span class="redStar">*</span></td>
+						<td><input  name="receiver"  v-model="order.receiver" placeholder="No more than 25 characters in length" type="text"></td>
+					</tr>
+					<tr>
+						<td>Phone Number <span class="redStar">*</span></td>
+						<td><input name="mobile"  v-model="order.mobile" placeholder="Please enter 11 digits mobile phone number" type="text"></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+		<div class="productList">
+			<div class="productListTip">Confirm Order Information</div>
+			
+			
+			<table class="productListTable">
+				<thead>
+					<tr>
+						<th colspan="2" class="productListTableFirstColumn">
+							<img class="tmallbuy" src="img/site/tmallbuy.png">
+							<a class="marketLink" href="#nowhere">XDMall</a>
+							<a class="wangwanglink" href="#nowhere"> <span class="wangwangGif"></span> </a>
+						</th>
+						<th>Unit price</th>
+						<th>Quantity</th>
+						<th>Subtotal</th>
+						<th>Delivery Method</th>
+					</tr>
+					<tr class="rowborder">
+						<td  colspan="2" ></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+				</thead>
+				<tbody class="productListTableTbody">
+						<tr class="orderItemTR" v-for="oi,index in orderItems" >
+							<td class="orderItemFirstTD">
+								<img class="orderItemImg"  :src="'img/productSingle_middle/'+oi.product.firstProductImage.id+'.jpg'">
+							</td>
+							<td class="orderItemProductInfo">
+								<a  :href="'product?pid='+oi.product.id" class="orderItemProductLink">
+									{{oi.product.name}}
+								</a>
+								<img src="img/site/creditcard.png" title="Support credit card payment">
+								<img src="img/site/7day.png" title="Consumer protection service, promise 7 days return">
+								<img src="img/site/promise.png" title="Consumer protection services, promise to truthfully describe">
+							</td>
+							<td>
+								<span class="orderItemProductPrice">
+									{{oi.product.promotePrice | formatMoneyFilter}}
+								</span>
+							</td>
+							<td>
+								<span class="orderItemProductNumber">{{oi.number}}</span>
+							</td>
+							<td>
+								<span class="orderItemUnitSum">
+									{{oi.product.promotePrice*oi.number | formatMoneyFilter}}
+								</span>
+							</td>
+							<td rowspan="5" class="orderItemLastTD" v-if="index==0" >
+								<label class="orderItemDeliveryLabel">
+									<input type="radio" value="" checked="checked">
+									ordinary delivery
+								</label>
+								<select class="orderItemDeliverySelect" class="form-control">
+									<option>Express Free Shipping</option>
+								</select>
+							</td>
+						</tr>
+				</tbody>
+			</table>
+			<div class="orderItemSumDiv">
+				<div class="pull-left">
+					<span class="leaveMessageText">Message to seller:</span>
+					<span>
+						<img class="leaveMessageImg" src="img/site/leaveMessage.png">
+					</span>
+					<span class="leaveMessageTextareaSpan">
+						<textarea name="userMessage" v-model="order.userMessage" class="leaveMessageTextarea"></textarea>
+						<div>
+							<span>You can also enter 200 characters</span>
+						</div>
+					</span>
+				</div>
+				<span class="pull-right">Store total (including shipping): ￥
+					{{total|formatMoneyFilter}}
+				</span>
+			</div>
+		
+		</div>
+		<div class="orderItemTotalSumDiv">
+			<div class="pull-right"> 
+				<span>real payment:</span>
+				<span class="orderItemTotalSumSpan">{{total|formatMoneyFilter}}</span>
+			</div>
+		</div>
+		<div class="submitOrderDiv">
+				<button type="submit" class="submitOrderButton" @click="submitOrder">Submit order</button>
+		</div>
+	</div>
+</div>
