@@ -36,9 +36,9 @@ public class ForeRESTController {
     @GetMapping("/forehome")
     public Object home() {
         List<Category> cs= categoryService.list();
-        //productService.fill(cs);
-        //productService.fillByRow(cs);
-        //categoryService.removeCategoryFromProduct(cs);
+        productService.fill(cs);
+        productService.fillByRow(cs);
+        categoryService.removeCategoryFromProduct(cs);
         return cs;
     }
 
@@ -99,5 +99,13 @@ public class ForeRESTController {
         map.put("reviews", reviews);
 
         return Result.success(map);
+    }
+
+    @GetMapping("forecheckLogin")
+    public Object checkLogin( HttpSession session) {
+        User user =(User)  session.getAttribute("user");
+        if(null!=user)
+            return Result.success();
+        return Result.fail("未登录");
     }
 }

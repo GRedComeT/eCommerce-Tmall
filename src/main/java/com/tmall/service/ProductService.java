@@ -10,16 +10,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import com.tmall.dao.ProductDAO;
-import com.tmall.pojo.Category;
-import com.tmall.pojo.Product;
-import com.tmall.util.Page4Navigator;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,10 +45,16 @@ public class ProductService  {
         Page<Product> pageFromJPA =productDAO.findByCategory(category,pageable);
         return new Page4Navigator<>(pageFromJPA,navigatePages);
     }
+
+    public void fill(List<Category> categorys) {
+        for (Category category : categorys) {
+            fill(category);
+        }
+    }
     public void fill(Category category) {
         List<Product> products = listByCategory(category);
         productImageService.setFirstProductImages(products);
-        category.setProducts(products);//在数据库中product与category多对一，但是在对象中没有体现，把list_products存到categroy对象中
+        category.setProducts(products);
     }
 
     public void fillByRow(List<Category> categorys) {//不是二维数组，每八个产品取一次放入一个List,list放入另一个List

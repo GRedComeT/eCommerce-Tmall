@@ -1,0 +1,20 @@
+<div th:fragment="html">
+    <div class="productDetailDiv" v-show="showDetail" >
+        <div class="productDetailTopPart">
+            <a href="#nowhere" class="productDetailTopPartSelectedLink selected">Goods details</a>
+            <a href="#nowhere" class="productDetailTopReviewLink" @click="toggle2Review">The cumulative assessment <span class="productDetailTopReviewLinkNumber">{{p.reviewCount}}</span> </a>
+        </div>
+
+        <div class="productParamterPart">
+            <div class="productParamter">Product parameters:</div>
+            <div class="productParamterList">
+                <span v-for="pv in pvs" >{{pv.property.name}}: {{pv.value | subStringFilter(0,10)}} </span>
+            </div>
+            <div style="clear:both"></div>
+        </div>
+
+        <div class="productDetailImagesPart">
+            <img v-for="pi in p.productDetailImages" :src="'img/productDetail/'+pi.id+'.jpg'">
+        </div>
+    </div>
+</div>
