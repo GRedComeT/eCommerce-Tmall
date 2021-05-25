@@ -110,8 +110,8 @@
                     </td>
                     <td>
                         <button @click="showOrderItems(bean)" class="orderPageCheckOrderItems btn btn-primary btn-xs">Details</button>
-
-                        <button v-if="bean.status=='waitDelivery'" @click="deliveryOrder(bean,$event)" class="btn btn-primary btn-xs">Delivery</button>
+                        <!--  Admin will not delivery sellers' product
+                        <button v-if="bean.status=='waitDelivery'" @click="deliveryOrder(bean,$event)" class="btn btn-primary btn-xs">Delivery</button> -->
                     </td>
                 </tr>
                 <tr class="orderPageOrderItemTR"  :id="'orderItemsTR'+bean.id">
